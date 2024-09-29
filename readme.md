@@ -4,7 +4,7 @@ To create a project that allows users to upload profile pictures using Node.js a
 - Set up a new Node.js project
 - Install necessary dependencies
 - Create a file upload route
-- Handle file uploads using multer and ddd form fields (`firstName` and `lastName`)
+- Handle file uploads using multer and add form fields (`firstName` and `lastName`)
 - Serve static files (images) OR Return the form fields along with the file path in the response.
 - Run the server and test the upload
 ### 1. Initialize a Node.js project
@@ -118,3 +118,14 @@ You can access the uploaded images through the /uploads route. For example, if y
 ```
 http://localhost:5000/uploads/profilePicture-1601490954268.jpg
 ```
+### 7. Sample API Response
+After a successful upload, you will get a JSON response with the following structure:
+```
+{
+  "message": "File uploaded successfully!",
+  "firstName": "John",
+  "lastName": "Doe",
+  "file": "uploads/profilePicture-1601490954268.jpg"
+}
+```
+This way, the API now accepts firstName, lastName, and profilePicture in the same request, storing the image and returning all data in the response.
