@@ -108,9 +108,9 @@ In Postman:
 - Select the POST method.
 - Enter http://localhost:5000/upload as the URL.
 - In the "Body" tab, select form-data.
-- Add a key firstName and enter a value (e.g., John).
-- Add a key lastName and enter a value (e.g., Doe).
-- Add a key profilePicture and select a file from your computer.
++ Add a key firstName and enter a value (e.g., John).
++ Add a key lastName and enter a value (e.g., Doe).
++ Add a key profilePicture and select a file from your computer.
 When the upload is successful, the API will return a JSON response containing the path to the uploaded file.
 ### 6. Serving the uploaded images
 You can access the uploaded images through the /uploads route. For example, if your image is named `profilePicture-1727645827651.jpg`, you can access it via:
