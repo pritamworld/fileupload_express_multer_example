@@ -122,10 +122,10 @@ http://localhost:5000/uploads/profilePicture-1601490954268.jpg
 After a successful upload, you will get a JSON response with the following structure:
 ```
 {
-  "message": "File uploaded successfully!",
-  "firstName": "John",
-  "lastName": "Doe",
-  "file": "uploads/profilePicture-1601490954268.jpg"
+    "message": "File uploaded successfully!",
+    "firstName": "Pritesh",
+    "lastName": "Patel",
+    "file": "uploads/profilePicture-1727645827651.png"
 }
 ```
 This way, the API now accepts firstName, lastName, and profilePicture in the same request, storing the image and returning all data in the response.
