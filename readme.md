@@ -113,10 +113,10 @@ In Postman:
 - Add a key profilePicture and select a file from your computer.
 When the upload is successful, the API will return a JSON response containing the path to the uploaded file.
 ### 6. Serving the uploaded images
-You can access the uploaded images through the /uploads route. For example, if your image is named `profilePicture-1601490954268.jpg`, you can access it via:
+You can access the uploaded images through the /uploads route. For example, if your image is named `profilePicture-1727645827651.jpg`, you can access it via:
 
 ```
-http://localhost:5000/uploads/profilePicture-1601490954268.jpg
+http://localhost:5000/uploads/profilePicture-1727645827651.png
 ```
 ### 7. Sample API Response
 After a successful upload, you will get a JSON response with the following structure:
@@ -129,3 +129,7 @@ After a successful upload, you will get a JSON response with the following struc
 }
 ```
 This way, the API now accepts firstName, lastName, and profilePicture in the same request, storing the image and returning all data in the response.
+
+## References
+- https://github.com/expressjs/multer
+- https://blog.logrocket.com/multer-nodejs-express-upload-file/
