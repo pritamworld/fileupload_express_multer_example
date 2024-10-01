@@ -1,6 +1,12 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const errorHandler = require('./errorMiddleware');
+const dotenv = require('dotenv');
+
+//Set up environment variables configuration
+var nodeEnvironment = process.env.NODE_ENV || "development";
+dotenv.config({ path: `./${nodeEnvironment}.env` });
 
 // Initialize the app
 const app = express();
@@ -70,6 +76,21 @@ app.post('/upload', (req, res) => {
   });
 });
 
+// Error handler middleware
+// Example route handler
+app.get('/example', (req, res, next) => {
+  try {
+    // Some code that might throw an error
+    throw new Error('Example error');
+  } catch (error) {
+    // Pass the error to Express error handler middleware
+    next(error);
+  }
+});
+
+// Register the error handler middleware
+app.use(errorHandler);
+
 // Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+const PORT = process.env.SERVER_PORT || 5000;
+app.listen(PORT, () => console.log(`Server started on http://localhost:${PORT}`));
