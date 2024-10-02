@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 //Set up environment variables configuration
 var nodeEnvironment = process.env.NODE_ENV || "development";
-dotenv.config({ path: `./${nodeEnvironment}.env` });
+dotenv.config({ path: `./environments/${nodeEnvironment}.env` });
 
 // Initialize the app
 const app = express();
