@@ -3,11 +3,11 @@ const multer = require('multer');
 const path = require('path');
 const errorHandler = require('./errorMiddleware');
 const dotenv = require('dotenv');
-const { cloudinaryUpload, uploadToCloudinary } = require('./cloudinary_upload');
-
 //Set up environment variables configuration
 var nodeEnvironment = process.env.NODE_ENV || "development";
 dotenv.config({ path: `./environments/${nodeEnvironment}.env` });
+
+const { cloudinaryUpload, uploadToCloudinary } = require('./cloudinary_upload');
 
 // console.log(process.env)
 // Initialize the app
@@ -83,7 +83,7 @@ app.post('/upload', (req, res) => {
 app.post('/cloudinary-upload', cloudinaryUpload.single('profile_image'), async (req, res) => {
   try {
       let profile_image_url = null;
-      //console.log({...req.body, file: req.file});
+      console.log({...req.body, file: req.file});
       if (req.file) {
         const result = await uploadToCloudinary(req.file.buffer, req.file.originalname);
         profile_image_url = result.secure_url;
@@ -91,7 +91,7 @@ app.post('/cloudinary-upload', cloudinaryUpload.single('profile_image'), async (
       const data = { ...req.body, profile_image_url };
       res.status(201).json(data);
   } catch (e) { 
-    res.status(401).send(e) 
+    res.status(401).send({ error: e.message }); 
   }
 });
 

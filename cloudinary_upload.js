@@ -2,11 +2,14 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { basename, extname } = require('path');
 
-cloudinary.config({
+cloudinaryConfig = {
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key:    process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET
-});
+}
+console.log('Cloudinary Config:', cloudinaryConfig);
+
+cloudinary.config(cloudinaryConfig);
 
 // Memory storage so it also works on Vercel (no disk writes)
 const cloudinaryUpload = multer({ storage: multer.memoryStorage() });
@@ -27,7 +30,7 @@ async function uploadToCloudinary(buffer, filename, options = {}) {
   const {
     folder = 'comp3123/users',
     public_id = nameOnly,
-    resource_type = 'auto', // handles images, video, pdf, etc.
+    resource_type = 'auto', // handles image, video, pdf, etc.
     overwrite = true,
     ...rest
   } = options;
@@ -35,9 +38,10 @@ async function uploadToCloudinary(buffer, filename, options = {}) {
   console.log('Cloudinary upload options:', { folder, public_id, resource_type, overwrite, ...rest });
 
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload_stream(
+    const stream = cloudinary.uploader.upload_stream(
       { folder, public_id, resource_type, overwrite, ...rest },
       (err, result) => { 
+        console.log('Cloudinary upload_stream callback:', { err, result });
         if(err) {
           console.log('Cloudinary Upload Error:', err);
           reject(err)
@@ -45,7 +49,8 @@ async function uploadToCloudinary(buffer, filename, options = {}) {
           console.log('Cloudinary Upload Result:', result);
           resolve(result)
         }
-      }).end(buffer);
+      })
+      stream.end(buffer);
   });
 }
 
