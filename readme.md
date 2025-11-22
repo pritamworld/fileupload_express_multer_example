@@ -130,6 +130,12 @@ After a successful upload, you will get a JSON response with the following struc
 ```
 This way, the API now accepts firstName, lastName, and profilePicture in the same request, storing the image and returning all data in the response.
 
+### 8. Create account on Cloudinary
+
+https://console.cloudinary.com/
+
+- Create folder comp3123/users
+
 ## References
 - https://github.com/expressjs/multer
 - https://blog.logrocket.com/multer-nodejs-express-upload-file/

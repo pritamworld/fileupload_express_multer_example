@@ -3,13 +3,22 @@ const multer = require('multer');
 const path = require('path');
 const errorHandler = require('./errorMiddleware');
 const dotenv = require('dotenv');
+const { cloudinaryUpload, uploadToCloudinary } = require('./cloudinary_upload');
 
 //Set up environment variables configuration
 var nodeEnvironment = process.env.NODE_ENV || "development";
 dotenv.config({ path: `./environments/${nodeEnvironment}.env` });
 
+// console.log(process.env)
 // Initialize the app
 const app = express();
+
+// Middleware to parse incoming form data (text fields)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Serve static folder
+app.use('/uploads', express.static('uploads'));
 
 // Set storage engine for multer
 const storage = multer.diskStorage({
@@ -41,12 +50,6 @@ function checkFileType(file, cb) {
   }
 }
 
-// Middleware to parse incoming form data (text fields)
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-// Serve static folder
-app.use('/uploads', express.static('uploads'));
 
 // Upload route with form data
 app.post('/upload', (req, res) => {
@@ -74,6 +77,22 @@ app.post('/upload', (req, res) => {
       }
     }
   });
+});
+
+// --- CREATE with optional image (you already have this) ---
+app.post('/cloudinary-upload', cloudinaryUpload.single('profile_image'), async (req, res) => {
+  try {
+      let profile_image_url = null;
+      //console.log({...req.body, file: req.file});
+      if (req.file) {
+        const result = await uploadToCloudinary(req.file.buffer, req.file.originalname);
+        profile_image_url = result.secure_url;
+      }
+      const data = { ...req.body, profile_image_url };
+      res.status(201).json(data);
+  } catch (e) { 
+    res.status(401).send(e) 
+  }
 });
 
 // Error handler middleware
